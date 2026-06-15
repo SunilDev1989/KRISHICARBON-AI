@@ -1,5 +1,10 @@
 # 🌾 KrishiCarbon AI
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-krishicarbon--ai.vercel.app-brightgreen?style=for-the-badge&logo=vercel)](https://krishicarbon-ai.vercel.app/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![Tests](https://img.shields.io/badge/Tests-65%20passing-success?style=for-the-badge&logo=vitest)](https://github.com/SunilDev1989/KRISHICARBON-AI)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+
 > **"The most urgent carbon-related problem for farmers is the dual squeeze of agriculture heavily emitting greenhouse gases and the severe costs incurred as climate change destroys harvests, depletes groundwater, and degrades soil. Transitioning to low-carbon practices requires capital, while international supply chains require strict carbon tracking, trapping small-scale farmers in a verification trap where calculating sequestration is too complex and expensive."**
 
 KrishiCarbon AI is a production-grade, zero-mock-data carbon ledger, climate risk, and verification engine built for Indian smallholder farmers. It breaks the verification trap by making IPCC Tier 1 carbon accounting as simple as a voice note — free, offline-capable, and multilingual.
@@ -20,6 +25,8 @@ KrishiCarbon AI is a production-grade, zero-mock-data carbon ledger, climate ris
 ---
 
 ## 🚀 Quick Start
+
+**🌐 Live Demo:** [https://krishicarbon-ai.vercel.app/](https://krishicarbon-ai.vercel.app/)
 
 ```bash
 git clone https://github.com/SunilDev1989/KRISHICARBON-AI.git
