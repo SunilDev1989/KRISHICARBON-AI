@@ -1,4 +1,4 @@
-{
+﻿{
   "nav.home": "मुखपृष्ठ",
   "nav.dashboard": "डॅशबोर्ड",
   "nav.ledger": "उत्सर्जन नोंदवही",
@@ -97,5 +97,34 @@
   "common.retry": "पुन्हा प्रयत्न करा",
   "common.kg": "किलो",
   "common.celsius": "°C",
-  "common.unit_co2e": "kg CO₂e"
+  "common.unit_co2e": "kg CO₂e",
+
+  "insights.badge": "AI कार्बन अंतर्दृष्टी",
+  "insights.title": "आपला कार्बन फूटप्रिंट कमी करा",
+  "insights.subtitle": "आपल्या शेत डेटावर आधारित वैयक्तिक सूचना, IPCC मार्गदर्शक तत्त्वांवर आधारित. प्रत्येक शिफारसीत अंदाजित CO₂e बचत समाविष्ट आहे.",
+  "insights.stat.co2e": "एकूण CO₂e नोंदविले",
+  "insights.stat.months": "महिने मागोवा",
+  "insights.stat.saving": "संभाव्य हंगामी बचत",
+  "insights.suggestions.title": "वैयक्तिक सूचना",
+  "insights.suggestions.via_ipcc": "IPCC मार्गदर्शनाद्वारे",
+  "insights.suggestions.via_gemini": "Gemini द्वारे",
+  "insights.suggestions.refresh": "ताजे करा",
+  "insights.suggestions.save_prefix": "💚 बचत ~",
+  "insights.suggestions.save_suffix": "kg CO₂e प्रति हंगाम",
+  "insights.suggestions.science_basis": "विज्ञान आधार:",
+  "insights.awareness.title": "तुम्हाला माहित आहे का?",
+  "insights.awareness.subtitle": "शेतकऱ्यांसाठी कार्बन फूटप्रिंट तथ्ये",
+  "insights.awareness.source": "स्रोत:",
+  "insights.fact.1": "जागतिक हरितगृह वायू उत्सर्जन शेतीमधून येते",
+  "insights.fact.2": "CO₂ पेक्षा अधिक शक्तिशाली — खतांमधून N₂O चा जागतिक तापमानवाढ प्रभाव",
+  "insights.fact.3": "1 टन गव्हाचे खुंट जाळण्याने CO₂e सोडले जाते",
+  "insights.fact.4": "निरोगी शेत प्रति हेक्टर प्रति वर्ष 600 kg CO₂ पर्यंत शोषू शकते",
+  "insights.fact.5": "प्रति टन CO₂e सध्याचा स्वयंसेवी कार्बन बाजार भाव शेतकऱ्यांना उपलब्ध",
+  "insights.fact.6": "1 हेक्टर शेत सीमेवर लावलेली झाडे 1 गोणी युरिया जाळण्याइतका CO₂ शोषतात",
+  "insights.market.title": "आपला कार्बन डेटा मूल्यवान आहे",
+  "insights.market.body": "KrishiCarbon AI मध्ये आपली प्रत्येक उत्सर्जन नोंद अपरिवर्तनीय, टाइमस्टॅम्प केलेल्या खातेवहीचा भाग आहे. हे ऐच्छिक कार्बन बाजारांमध्ये प्रवेश करण्याचा आधार आहे.",
+  "insights.market.price_label": "ऐच्छिक कार्बन किंमत",
+  "insights.market.size_label": "किमान प्रकल्प आकार",
+  "insights.market.standard_label": "पडताळणी मानक",
+  "insights.market.source": "स्रोत: Gold Standard, Verra VCS, भारत कार्बन बाजार"
 }

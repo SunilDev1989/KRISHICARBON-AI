@@ -41,16 +41,6 @@ const CATEGORY_META: Record<string, { icon: typeof Leaf; color: string; bg: stri
   Agroforestry: { icon: TreePine,  color: 'text-green-700',   bg: 'bg-green-50 border-green-200' },
 };
 
-/* ── Awareness facts ─────────────────────────────────────────────────── */
-const AWARENESS_FACTS = [
-  { icon: '🌾', stat: '18%',       label: 'of global greenhouse gas emissions come from agriculture',                           source: 'IPCC AR6, 2022' },
-  { icon: '💧', stat: '273×',      label: "more potent than CO₂ — that's the global warming impact of N₂O from fertilizers",   source: 'IPCC AR6 GWP100' },
-  { icon: '🔥', stat: '1,520 kg',  label: 'CO₂e released by burning just 1 tonne of wheat stubble',                            source: 'IPCC 2006 GL Vol 4' },
-  { icon: '🌱', stat: '1 hectare', label: 'of healthy farmland can sequester up to 600 kg CO₂ per year through good soil practices', source: 'FAO Soils Bulletin' },
-  { icon: '💰', stat: '₹500–₹2,000', label: 'per tonne CO₂e is the current voluntary carbon market price accessible to farmers', source: 'Gold Standard, 2024' },
-  { icon: '🌳', stat: '34 trees',  label: 'planted on a 1-hectare farm border absorb the equivalent of burning 1 bag of urea',  source: 'IPCC 2006 GL Agroforestry' },
-];
-
 /* ── Cost badge ──────────────────────────────────────────────────────── */
 function CostBadge({ level }: { level: string }) {
   const styles: Record<string, string> = {
@@ -97,7 +87,17 @@ export default function InsightsPage() {
   const totalCo2e = carbonTotals.reduce((sum, c) => sum + (c.co2e_kg ?? 0), 0);
   const monthCount = carbonTotals.length;
 
-  /* Fetch the most recent emission log for personalization */
+  /* Awareness facts — defined inside component so t() is available */
+  const AWARENESS_FACTS = [
+    { icon: '🌾', stat: '18%',           label: t('insights.fact.1'), source: 'IPCC AR6, 2022' },
+    { icon: '💧', stat: '273×',          label: t('insights.fact.2'), source: 'IPCC AR6 GWP100' },
+    { icon: '🔥', stat: '1,520 kg',      label: t('insights.fact.3'), source: 'IPCC 2006 GL Vol 4' },
+    { icon: '🌱', stat: '1 hectare',     label: t('insights.fact.4'), source: 'FAO Soils Bulletin' },
+    { icon: '💰', stat: '₹500–₹2,000',  label: t('insights.fact.5'), source: 'Gold Standard, 2024' },
+    { icon: '🌳', stat: '34 trees',      label: t('insights.fact.6'), source: 'IPCC 2006 GL Agroforestry' },
+  ];
+
+  /* Fetch most recent emission log for personalisation */
   useEffect(() => {
     const fetchLatest = async () => {
       try {
@@ -157,14 +157,13 @@ export default function InsightsPage() {
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-semibold">
           <Lightbulb className="w-4 h-4" />
-          AI Carbon Insights
+          {t('insights.badge')}
         </div>
         <h1 className="text-3xl font-bold text-gray-900">
-          Reduce Your Carbon Footprint
+          {t('insights.title')}
         </h1>
         <p className="text-gray-500 max-w-xl mx-auto text-sm">
-          Personalised suggestions based on your farm data, grounded in IPCC guidelines.
-          Each recommendation includes estimated CO₂e savings.
+          {t('insights.subtitle')}
         </p>
       </div>
 
@@ -172,39 +171,41 @@ export default function InsightsPage() {
       {carbonTotals.length > 0 && (
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: 'Total CO₂e Logged', value: `${totalCo2e.toFixed(1)} kg CO₂e`, icon: TrendingDown, color: 'text-red-600' },
-            { label: 'Months Tracked', value: monthCount.toString(), icon: CheckCircle2, color: 'text-blue-600' },
-            { label: 'Potential Seasonal Saving', value: `${totalPotentialSaving.toFixed(0)} kg CO₂e`, icon: Leaf, color: 'text-emerald-600' },
-          ].map(({ label, value, icon: Icon, color }) => (
-            <div key={label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
+            { labelKey: 'insights.stat.co2e',   value: `${totalCo2e.toFixed(1)} kg CO₂e`, icon: TrendingDown, color: 'text-red-600' },
+            { labelKey: 'insights.stat.months',  value: monthCount.toString(),              icon: CheckCircle2, color: 'text-blue-600' },
+            { labelKey: 'insights.stat.saving',  value: `${totalPotentialSaving.toFixed(0)} kg CO₂e`, icon: Leaf, color: 'text-emerald-600' },
+          ].map(({ labelKey, value, icon: Icon, color }) => (
+            <div key={labelKey} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
               <Icon className={`w-6 h-6 mx-auto mb-1 ${color}`} />
               <p className={`text-xl font-bold ${color}`}>{value}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{label}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{t(labelKey)}</p>
             </div>
           ))}
         </div>
       )}
 
       {/* ── AI Suggestions ─────────────────────────────────────────── */}
-      <section aria-label="AI Carbon Reduction Suggestions">
+      <section aria-label={t('insights.suggestions.title')}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-yellow-500" />
-            Personalised Suggestions
+            {t('insights.suggestions.title')}
             {aiModel && (
               <span className="text-xs font-normal text-gray-400 ml-1">
-                via {aiModel === 'static-fallback' ? 'IPCC guidelines' : `Gemini (${aiModel})`}
+                {aiModel === 'static-fallback'
+                  ? t('insights.suggestions.via_ipcc')
+                  : `${t('insights.suggestions.via_gemini')} (${aiModel})`}
               </span>
             )}
           </h2>
           <button
             onClick={fetchSuggestions}
             disabled={loading}
-            aria-label="Refresh suggestions"
+            aria-label={t('insights.suggestions.refresh')}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-emerald-700 hover:bg-emerald-50 rounded-lg border border-emerald-200 transition-colors disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
+            {t('insights.suggestions.refresh')}
           </button>
         </div>
 
@@ -216,7 +217,7 @@ export default function InsightsPage() {
         )}
 
         {loading ? (
-          <div className="space-y-3" aria-busy="true" aria-label="Loading suggestions">
+          <div className="space-y-3" aria-busy="true" aria-label={t('common.loading')}>
             {[1, 2, 3, 4, 5].map(i => (
               <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 animate-pulse">
                 <div className="h-5 bg-gray-200 rounded w-2/3 mb-3" />
@@ -259,7 +260,7 @@ export default function InsightsPage() {
                       </div>
                       <h3 className="font-semibold text-gray-900">{s.title}</h3>
                       <p className="text-sm text-emerald-700 font-medium mt-0.5">
-                        💚 Save ~{s.co2eSavingKgPerSeason.toLocaleString()} kg CO₂e per season
+                        {t('insights.suggestions.save_prefix')}{s.co2eSavingKgPerSeason.toLocaleString()} {t('insights.suggestions.save_suffix')}
                       </p>
                     </div>
 
@@ -274,7 +275,7 @@ export default function InsightsPage() {
                       <div className="mt-3 flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-lg p-3">
                         <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
                         <p className="text-xs text-blue-700">
-                          <span className="font-semibold">Science basis: </span>
+                          <span className="font-semibold">{t('insights.suggestions.science_basis')} </span>
                           {s.ipccBasis}
                         </p>
                       </div>
@@ -288,11 +289,11 @@ export default function InsightsPage() {
       </section>
 
       {/* ── Carbon Awareness Section ────────────────────────────────── */}
-      <section aria-label="Carbon Footprint Awareness">
+      <section aria-label={t('insights.awareness.title')}>
         <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <Leaf className="w-5 h-5 text-emerald-600" />
-          Did You Know?
-          <span className="text-xs font-normal text-gray-400">Carbon footprint facts for farmers</span>
+          {t('insights.awareness.title')}
+          <span className="text-xs font-normal text-gray-400">{t('insights.awareness.subtitle')}</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {AWARENESS_FACTS.map((fact) => (
@@ -303,7 +304,7 @@ export default function InsightsPage() {
               <div className="text-3xl mb-2">{fact.icon}</div>
               <p className="text-2xl font-black text-emerald-700 mb-1">{fact.stat}</p>
               <p className="text-sm text-gray-700 leading-relaxed">{fact.label}</p>
-              <p className="text-xs text-gray-400 mt-2 italic">Source: {fact.source}</p>
+              <p className="text-xs text-gray-400 mt-2 italic">{t('insights.awareness.source')} {fact.source}</p>
             </div>
           ))}
         </div>
@@ -311,32 +312,30 @@ export default function InsightsPage() {
 
       {/* ── Carbon Market Awareness ─────────────────────────────────── */}
       <section
-        aria-label="Carbon Credit Market Information"
+        aria-label={t('insights.market.title')}
         className="bg-gradient-to-br from-emerald-700 to-green-800 text-white rounded-2xl p-6 space-y-3"
       >
         <div className="flex items-center gap-2">
           <span className="text-2xl">💹</span>
-          <h2 className="text-lg font-bold">Your Carbon Data Has Value</h2>
+          <h2 className="text-lg font-bold">{t('insights.market.title')}</h2>
         </div>
         <p className="text-emerald-100 text-sm leading-relaxed">
-          Every emission entry you log in KrishiCarbon AI is part of an <strong>immutable, timestamped ledger</strong>.
-          This is the foundation for accessing voluntary carbon markets. When you reduce emissions using these
-          suggestions, the difference between your baseline and new readings is your <strong>carbon reduction credit</strong>.
+          {t('insights.market.body')}
         </p>
         <div className="grid grid-cols-3 gap-3 mt-4">
           {[
-            { label: 'Voluntary Carbon Price', value: '₹500–₹2,000/tonne' },
-            { label: 'Minimum Project Size', value: '~20 farmers pooled' },
-            { label: 'Verification Standard', value: 'IPCC Tier 1 ✓' },
-          ].map(({ label, value }) => (
-            <div key={label} className="bg-white/10 rounded-xl p-3 text-center">
+            { labelKey: 'insights.market.price_label',    value: '₹500–₹2,000/tonne' },
+            { labelKey: 'insights.market.size_label',     value: '~20 farmers pooled' },
+            { labelKey: 'insights.market.standard_label', value: 'IPCC Tier 1 ✓' },
+          ].map(({ labelKey, value }) => (
+            <div key={labelKey} className="bg-white/10 rounded-xl p-3 text-center">
               <p className="text-white font-bold text-sm">{value}</p>
-              <p className="text-emerald-300 text-xs mt-0.5">{label}</p>
+              <p className="text-emerald-300 text-xs mt-0.5">{t(labelKey)}</p>
             </div>
           ))}
         </div>
         <p className="text-xs text-emerald-300 mt-2">
-          Source: Gold Standard, Verra VCS, India Carbon Market guidelines
+          {t('insights.market.source')}
         </p>
       </section>
 

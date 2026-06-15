@@ -1,4 +1,4 @@
-{
+﻿{
   "nav.home": "முகப்பு",
   "nav.dashboard": "டாஷ்போர்டு",
   "nav.ledger": "உமிழ்வு பதிவேடு",
@@ -97,5 +97,34 @@
   "common.retry": "மீண்டும் முயற்சி",
   "common.kg": "கிலோ",
   "common.celsius": "°C",
-  "common.unit_co2e": "kg CO₂e"
+  "common.unit_co2e": "kg CO₂e",
+
+  "insights.badge": "AI கார்பன் நுண்ணறிவு",
+  "insights.title": "உங்கள் கார்பன் தடம் குறைக்கவும்",
+  "insights.subtitle": "உங்கள் பண்ணை தரவை அடிப்படையாக கொண்ட தனிப்பட்ட பரிந்துரைகள், IPCC வழிகாட்டுதல்களில் வேரூன்றியவை.",
+  "insights.stat.co2e": "மொத்த CO₂e பதிவு",
+  "insights.stat.months": "மாதங்கள் கண்காணிக்கப்பட்டன",
+  "insights.stat.saving": "சாத்தியமான பருவகால சேமிப்பு",
+  "insights.suggestions.title": "தனிப்பட்ட பரிந்துரைகள்",
+  "insights.suggestions.via_ipcc": "IPCC வழிகாட்டுதல்கள் மூலம்",
+  "insights.suggestions.via_gemini": "Gemini மூலம்",
+  "insights.suggestions.refresh": "புதுப்பிக்கவும்",
+  "insights.suggestions.save_prefix": "💚 சேமிப்பு ~",
+  "insights.suggestions.save_suffix": "kg CO₂e பருவத்திற்கு",
+  "insights.suggestions.science_basis": "அறிவியல் அடிப்படை:",
+  "insights.awareness.title": "உங்களுக்கு தெரியுமா?",
+  "insights.awareness.subtitle": "விவசாயிகளுக்கான கார்பன் தடம் உண்மைகள்",
+  "insights.awareness.source": "மூலம்:",
+  "insights.fact.1": "உலக கிரீன்ஹவுஸ் வாயு உமிழ்வு விவசாயத்திலிருந்து வருகிறது",
+  "insights.fact.2": "CO₂ ஐ விட அதிக சக்திவாய்ந்தது — உரங்களிலிருந்து N₂O இன் வெப்பமயமாதல் தாக்கம்",
+  "insights.fact.3": "1 டன் கோதுமை தண்டு எரிப்பதால் CO₂e வெளியாகிறது",
+  "insights.fact.4": "ஆரோக்கியமான பண்ணை ஹெக்டேருக்கு ஆண்டுக்கு 600 kg CO₂ வரை உறிஞ்சும்",
+  "insights.fact.5": "டன் CO₂e க்கு தற்போதைய தன்னார்வ கார்பன் சந்தை விலை விவசாயிகளுக்கு கிடைக்கும்",
+  "insights.fact.6": "1 ஹெக்டேர் பண்ணை எல்லையில் நடப்பட்ட மரங்கள் 1 பை யூரியா எரிப்பதற்கு சமன் CO₂ உறிஞ்சும்",
+  "insights.market.title": "உங்கள் கார்பன் தரவு மதிப்புமிக்கது",
+  "insights.market.body": "KrishiCarbon AI இல் நீங்கள் பதிவு செய்யும் ஒவ்வொரு உமிழ்வு நுழைவும் மாறாத, நேர-முத்திரையிடப்பட்ட பதிவேட்டின் ஒரு பகுதியாகும். இது தன்னார்வ கார்பன் சந்தைகளை அணுகுவதற்கான அடித்தளம்.",
+  "insights.market.price_label": "தன்னார்வ கார்பன் விலை",
+  "insights.market.size_label": "குறைந்தபட்ச திட்ட அளவு",
+  "insights.market.standard_label": "சரிபார்ப்பு தரநிலை",
+  "insights.market.source": "மூலம்: Gold Standard, Verra VCS, இந்தியா கார்பன் சந்தை"
 }
