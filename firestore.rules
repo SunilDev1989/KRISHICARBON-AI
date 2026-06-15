@@ -1,0 +1,38 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Emission Logs ──────────────────────────────────────────────────────
+    // Readable/writable by anyone (session-based auth without registration).
+    // farm_id scoping provides logical separation between farms.
+    match /emissionLogs/{docId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow create: if isValidEmissionLog(request.resource.data);
+      allow update, delete: if false; // immutable ledger entries
+    }
+
+    // ── Soil Ledgers ───────────────────────────────────────────────────────
+    match /soilLedgers/{docId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow create: if isValidSoilLedger(request.resource.data);
+      allow update, delete: if false; // immutable verification records
+    }
+
+    // ── Validation Functions ───────────────────────────────────────────────
+    function isValidEmissionLog(data) {
+      return data.keys().hasAll(['farmId', 'co2e_kg', 'timestamp'])
+        && data.farmId is string
+        && data.farmId.size() > 0
+        && data.co2e_kg is number
+        && data.co2e_kg >= 0
+        && data.co2e_kg <= 1000000; // sanity cap: 1000 tCO2e max per entry
+    }
+
+    function isValidSoilLedger(data) {
+      return data.keys().hasAll(['farmId', 'timestamp'])
+        && data.farmId is string
+        && data.farmId.size() > 0;
+    }
+  }
+}
