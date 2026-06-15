@@ -1,0 +1,38 @@
+# Dependencies — never copy into Docker image (installed fresh in container)
+node_modules
+npm-debug.log*
+
+# Next.js build cache — rebuilt inside Docker
+.next
+.turbo
+
+# Environment files — secrets injected at runtime by Cloud Run, not baked in
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.production.local
+
+# Source maps and TypeScript helpers
+*.tsbuildinfo
+next-env.d.ts
+
+# Git and CI files — not needed in container
+.git
+.gitignore
+.github
+.husky
+
+# Dev tooling — not needed in production image
+vitest.config.ts
+src/lib/__tests__
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel config — not relevant for Cloud Run
+.vercel
+
+# Test coverage
+coverage

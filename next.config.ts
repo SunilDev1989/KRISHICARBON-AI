@@ -5,6 +5,9 @@ import type { NextConfig } from 'next';
  * Single source of truth (replaces next.config.mjs)
  */
 const nextConfig: NextConfig = {
+  // Standalone output for Docker/Cloud Run — bundles only what's needed
+  output: 'standalone',
+
   images: {
     remotePatterns: [
       {
