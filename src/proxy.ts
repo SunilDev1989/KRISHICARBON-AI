@@ -28,7 +28,7 @@ function getClientIp(req: NextRequest): string {
   );
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // Only rate-limit API routes
   if (!req.nextUrl.pathname.startsWith('/api/')) {
     return NextResponse.next();
