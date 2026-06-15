@@ -5,7 +5,7 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import { FarmProvider } from '@/context/FarmContext';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import Link from 'next/link';
-import { Leaf, BarChart3, BookOpen, FlaskConical, Store } from 'lucide-react';
+import { Leaf, BarChart3, BookOpen, FlaskConical, Store, Lightbulb } from 'lucide-react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -60,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
                       { href: '/dashboard/ledger', icon: BookOpen, label: 'Ledger' },
                       { href: '/dashboard/verify', icon: FlaskConical, label: 'Verify' },
+                      { href: '/dashboard/insights', icon: Lightbulb, label: 'Insights' },
                       { href: '/dashboard/hub', icon: Store, label: 'Hub' },
                     ].map(({ href, icon: Icon, label }) => (
                       <Link
