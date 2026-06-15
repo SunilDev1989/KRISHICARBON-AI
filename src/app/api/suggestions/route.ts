@@ -33,7 +33,13 @@ const LANG_NAMES: Record<string, string> = {
   mr: 'Marathi',
 };
 
-export async function POST(req: NextRequest) {
+/**
+ * Generate personalised IPCC-grounded carbon reduction suggestions via Gemini AI.
+ *
+ * @param req - JSON body conforming to EmissionSummary (fertilizerType, massKg, etc.)
+ * @returns Array of 5 ranked Suggestion objects, model used, and success flag
+ */
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body: EmissionSummary = await req.json();
 

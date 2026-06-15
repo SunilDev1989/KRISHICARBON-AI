@@ -1,8 +1,14 @@
 'use client';
+/**
+ * Verify page — multimodal soil data entry via Gemini AI.
+ * Supports two input modes:
+ *  1. Lab Report Upload — Gemini Vision extracts SOC, N, pH, Bulk Density from image/PDF
+ *  2. Voice Input — Gemini NLP extracts fertilizer/field operations from regional language audio
+ */
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import SoilUpload from '@/components/ui/SoilUpload';
-import VoiceRecorder from '@/components/ui/VoiceRecorder';
+import VoiceRecorder, { type VoiceResult } from '@/components/ui/VoiceRecorder';
 import { FlaskConical, Mic, Upload, BookOpen, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -11,7 +17,7 @@ type ActiveTab = 'lab' | 'voice';
 export default function VerifyPage() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<ActiveTab>('lab');
-  const [voiceResult, setVoiceResult] = useState<any>(null);
+  const [voiceResult, setVoiceResult] = useState<VoiceResult | null>(null);
 
   const tabs = [
     { id: 'lab' as ActiveTab, icon: Upload, label: t('verify.lab_tab') },

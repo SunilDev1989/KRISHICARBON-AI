@@ -32,7 +32,13 @@ interface EmissionRequest {
   farmId?: string;
 }
 
-export async function POST(req: NextRequest) {
+/**
+ * Compute IPCC Tier 1 agricultural GHG emissions and persist to Firestore.
+ *
+ * @param req - JSON body conforming to EmissionRequest
+ * @returns Computed n2o_kg, co2e_kg, formula_trace, and Firestore document ID
+ */
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body: EmissionRequest = await req.json();
     const {

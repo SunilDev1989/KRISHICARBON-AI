@@ -1,3 +1,15 @@
+/**
+ * POST /api/voice-intent
+ *
+ * Transcribes and semantically parses regional-language farmer voice recordings
+ * using Gemini multimodal AI. Accepts audio as base64-encoded inline data.
+ *
+ * Supported languages: Hindi, Gujarati, Tamil, Marathi, English.
+ * Supported audio formats: audio/webm, audio/ogg, audio/mp4, audio/wav.
+ *
+ * Returns a structured JSON intent object describing the detected farm operation
+ * (e.g. fertilizer application, irrigation, residue management).
+ */
 import { NextRequest, NextResponse } from 'next/server';
 import { genAI, GEMINI_MODEL, GEMINI_REQUEST_OPTIONS } from '@/lib/gemini';
 
@@ -23,7 +35,13 @@ Examples:
 - "मैंने आज खेत में दो बोरी यूरिया डाला" → {"action":"fertilizer_application","type":"Urea","quantity_kg":100,"unit":"bag","crop":null,"field_area_acres":null,"raw_transcript":"...","confidence":"high"}
 - "આજે મેં ડ્રિપ સિંચાઈ ચલાવી" → {"action":"irrigation","type":"drip","quantity_kg":null,"unit":null,"crop":null,"field_area_acres":null,"raw_transcript":"...","confidence":"high"}`;
 
-export async function POST(req: NextRequest) {
+/**
+ * Parse a farmer voice recording and extract a structured farm operation intent.
+ *
+ * @param req - FormData with `audioBase64` (base64 string) and optional `mimeType`
+ * @returns JSON object with action, type, quantity_kg, unit, crop, confidence, and raw_transcript
+ */
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const formData = await req.formData();
     const audioBase64 = formData.get('audioBase64') as string;

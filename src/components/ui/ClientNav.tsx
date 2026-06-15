@@ -1,9 +1,22 @@
+/**
+ * ClientNav — client-side primary navigation component.
+ *
+ * Extracted from layout.tsx as a 'use client' boundary so that
+ * useLanguage() can be called for translated nav labels without
+ * converting the root Server Component layout to a client component.
+ */
 'use client';
 
 import Link from 'next/link';
 import { BarChart3, BookOpen, FlaskConical, Lightbulb, Store } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
+/**
+ * Renders the primary navigation links with translated labels.
+ * Re-renders automatically when the user switches language.
+ *
+ * @returns A `<nav>` element with 5 dashboard section links
+ */
 export default function ClientNav() {
   const { t } = useLanguage();
 

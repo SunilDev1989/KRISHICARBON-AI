@@ -4,7 +4,8 @@ import { Mic, Square, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { cn } from '@/lib/utils';
 
-interface VoiceResult {
+/** Structured voice intent result returned by the /api/voice-intent endpoint */
+export interface VoiceResult {
   action: string;
   type: string;
   quantity_kg: number | null;
