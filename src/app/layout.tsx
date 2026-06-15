@@ -6,6 +6,7 @@ import { FarmProvider } from '@/context/FarmContext';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import Link from 'next/link';
 import { Leaf, BarChart3, BookOpen, FlaskConical, Store, Lightbulb } from 'lucide-react';
+import ClientNav from '@/components/ui/ClientNav';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -54,25 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </div>
                   </Link>
 
-                  {/* Primary navigation */}
-                  <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-                    {[
-                      { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
-                      { href: '/dashboard/ledger', icon: BookOpen, label: 'Ledger' },
-                      { href: '/dashboard/verify', icon: FlaskConical, label: 'Verify' },
-                      { href: '/dashboard/insights', icon: Lightbulb, label: 'Insights' },
-                      { href: '/dashboard/hub', icon: Store, label: 'Hub' },
-                    ].map(({ href, icon: Icon, label }) => (
-                      <Link
-                        key={href}
-                        href={href}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-150"
-                      >
-                        <Icon className="w-4 h-4" />
-                        {label}
-                      </Link>
-                    ))}
-                  </nav>
+                  <ClientNav />
 
                   {/* Language Switcher */}
                   <LanguageSwitcher />

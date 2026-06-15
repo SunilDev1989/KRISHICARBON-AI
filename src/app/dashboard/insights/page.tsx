@@ -42,7 +42,7 @@ const CATEGORY_META: Record<string, { icon: typeof Leaf; color: string; bg: stri
 };
 
 /* ── Cost badge ──────────────────────────────────────────────────────── */
-function CostBadge({ level }: { level: string }) {
+function CostBadge({ level, displayLabel }: { level: string; displayLabel?: string }) {
   const styles: Record<string, string> = {
     'Free':                  'bg-green-100 text-green-800 border-green-200',
     'Low (₹500-2000)':       'bg-blue-100 text-blue-800 border-blue-200',
@@ -51,13 +51,13 @@ function CostBadge({ level }: { level: string }) {
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${styles[level] ?? 'bg-gray-100 text-gray-700 border-gray-200'}`}>
       <IndianRupee className="w-3 h-3" />
-      {level}
+      {displayLabel ?? level}
     </span>
   );
 }
 
 /* ── Time badge ──────────────────────────────────────────────────────── */
-function TimeBadge({ time }: { time: string }) {
+function TimeBadge({ time, displayLabel }: { time: string; displayLabel?: string }) {
   const styles: Record<string, string> = {
     'Immediate': 'bg-emerald-100 text-emerald-800',
     '1 Season':  'bg-yellow-100 text-yellow-800',
@@ -74,7 +74,29 @@ function TimeBadge({ time }: { time: string }) {
 /* ── Main Page ───────────────────────────────────────────────────────── */
 export default function InsightsPage() {
   const { carbonTotals, farmId } = useFarm();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+
+  /* ── Translation maps for Gemini enum values ─────────────────────── */
+  const CATEGORY_LABELS: Record<string, string> = {
+    Fertilizer:   t('insights.cat.fertilizer'),
+    Residue:      t('insights.cat.residue'),
+    Soil:         t('insights.cat.soil'),
+    Water:        t('insights.cat.water'),
+    Energy:       t('insights.cat.energy'),
+    Agroforestry: t('insights.cat.agroforestry'),
+  };
+
+  const COST_LABELS: Record<string, string> = {
+    'Free':                  t('insights.cost.free'),
+    'Low (₹500-2000)':       t('insights.cost.low'),
+    'Medium (₹2000-10000)':  t('insights.cost.medium'),
+  };
+
+  const TIME_LABELS: Record<string, string> = {
+    'Immediate': t('insights.time.immediate'),
+    '1 Season':  t('insights.time.one_season'),
+    '1-2 Years': t('insights.time.one_two_years'),
+  };
 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading, setLoading] = useState(false);
@@ -131,6 +153,7 @@ export default function InsightsPage() {
           residueType:    latestLog?.residueType ?? 'unknown',
           totalCo2eKg:    totalCo2e,
           monthlyRecords: monthCount,
+          lang:           locale,
         }),
       });
       const data = await res.json();
@@ -253,10 +276,10 @@ export default function InsightsPage() {
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border ${meta.bg} ${meta.color}`}>
                           <Icon className="w-3 h-3" />
-                          {s.category}
+                          {CATEGORY_LABELS[s.category] ?? s.category}
                         </span>
-                        <CostBadge level={s.costLevel} />
-                        <TimeBadge time={s.timeToImpact} />
+                        <CostBadge level={s.costLevel} displayLabel={COST_LABELS[s.costLevel]} />
+                        <TimeBadge time={s.timeToImpact} displayLabel={TIME_LABELS[s.timeToImpact]} />
                       </div>
                       <h3 className="font-semibold text-gray-900">{s.title}</h3>
                       <p className="text-sm text-emerald-700 font-medium mt-0.5">

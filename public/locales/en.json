@@ -1,4 +1,4 @@
-{
+﻿{
   "nav.home": "Home",
   "nav.dashboard": "Dashboard",
   "nav.ledger": "Emission Ledger",
@@ -126,5 +126,29 @@
   "insights.market.price_label": "Voluntary Carbon Price",
   "insights.market.size_label": "Minimum Project Size",
   "insights.market.standard_label": "Verification Standard",
-  "insights.market.source": "Source: Gold Standard, Verra VCS, India Carbon Market guidelines"
+  "insights.market.source": "Source: Gold Standard, Verra VCS, India Carbon Market guidelines",
+  "nav.insights": "Insights",
+  "ledger.subtitle": "IPCC Tier 1 certified emission records",
+  "ledger.total_co2e": "Total CO\u2082e (kg)",
+  "ledger.total_entries": "Total Entries",
+  "ledger.total_n2o": "Total N\u2082O (kg)",
+  "ledger.residue": "Residue",
+  "ledger.add_entry": "Add New Emission Entry",
+  "verify.how_it_works": "Upload your soil lab report image or PDF for instant AI extraction of carbon data.",
+  "verify.input_formats": "Supported Input Formats",
+  "verify.extracted_params": "Extracted Parameters",
+  "hub.subtitle": "Geolocated green economy suppliers near you",
+  "hub.fetch_error": "Unable to fetch suppliers",
+  "insights.cat.fertilizer": "Fertilizer",
+  "insights.cat.residue": "Residue",
+  "insights.cat.soil": "Soil",
+  "insights.cat.water": "Water",
+  "insights.cat.energy": "Energy",
+  "insights.cat.agroforestry": "Agroforestry",
+  "insights.cost.free": "Free",
+  "insights.cost.low": "Low",
+  "insights.cost.medium": "Medium",
+  "insights.time.immediate": "Immediate",
+  "insights.time.one_season": "1 Season",
+  "insights.time.one_two_years": "1-2 Years"
 }

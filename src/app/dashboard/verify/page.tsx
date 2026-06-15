@@ -26,9 +26,7 @@ export default function VerifyPage() {
           <FlaskConical className="w-8 h-8 text-blue-600" />
           {t('verify.title')}
         </h1>
-        <p className="text-gray-500 mt-1 text-sm">
-          Multimodal AI-powered soil data extraction via Gemini 1.5 Flash
-        </p>
+        <p className="text-gray-500 mt-1 text-sm">{t('verify.how_it_works')}</p>
       </div>
 
       {/* Info Banner */}
@@ -120,7 +118,7 @@ export default function VerifyPage() {
 
           {/* Supported Formats */}
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <h4 className="font-semibold text-gray-700 text-sm mb-3">Supported Input Formats</h4>
+            <h4 className="font-semibold text-gray-700 text-sm mb-3">{t('verify.input_formats')}</h4>
             <div className="flex flex-wrap gap-2">
               {['JPG / JPEG', 'PNG', 'WebP', 'PDF (image)'].map((fmt) => (
                 <span key={fmt} className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{fmt}</span>
@@ -130,7 +128,7 @@ export default function VerifyPage() {
 
           {/* Extracted Parameters */}
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <h4 className="font-semibold text-gray-700 text-sm mb-3">Extracted Parameters</h4>
+            <h4 className="font-semibold text-gray-700 text-sm mb-3">{t('verify.extracted_params')}</h4>
             <div className="space-y-2">
               {[
                 { label: 'SOC', full: 'Soil Organic Carbon', unit: '%', color: 'emerald' },

@@ -109,7 +109,7 @@ export default function HubPage() {
           <Store className="w-8 h-8 text-amber-600" />
           {t('hub.title')}
         </h1>
-        <p className="text-gray-500 mt-1 text-sm">Geolocated green economy suppliers via Google Places API</p>
+        <p className="text-gray-500 mt-1 text-sm">{t('hub.subtitle')}</p>
       </div>
 
       {/* Location Status */}
@@ -164,7 +164,7 @@ export default function HubPage() {
         <div className="flex items-start gap-3 p-5 bg-red-50 border border-red-200 rounded-2xl text-red-700">
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-semibold">Unable to fetch suppliers</p>
+            <p className="font-semibold">{t('hub.fetch_error')}</p>
             <p className="text-sm mt-0.5">{error}</p>
             <p className="text-xs mt-2 text-red-500">
               Ensure your Google Maps API key has Places API enabled with proper domain restrictions.

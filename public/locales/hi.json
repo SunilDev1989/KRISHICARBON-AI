@@ -1,4 +1,4 @@
-{
+﻿{
   "nav.home": "होम",
   "nav.dashboard": "डैशबोर्ड",
   "nav.ledger": "उत्सर्जन खाता",
@@ -126,5 +126,29 @@
   "insights.market.price_label": "स्वैच्छिक कार्बन मूल्य",
   "insights.market.size_label": "न्यूनतम परियोजना आकार",
   "insights.market.standard_label": "सत्यापन मानक",
-  "insights.market.source": "स्रोत: Gold Standard, Verra VCS, भारत कार्बन बाजार दिशानिर्देश"
+  "insights.market.source": "स्रोत: Gold Standard, Verra VCS, भारत कार्बन बाजार दिशानिर्देश",
+  "nav.insights": "अंतर्दृष्टि",
+  "ledger.subtitle": "IPCC Tier 1 प्रमाणित उत्सर्जन अभिलेख",
+  "ledger.total_co2e": "कुल CO\u2082e (किग्रा)",
+  "ledger.total_entries": "कुल प्रविष्टियाँ",
+  "ledger.total_n2o": "कुल N\u2082O (किग्रा)",
+  "ledger.residue": "फसल अवशेष",
+  "ledger.add_entry": "नई उत्सर्जन प्रविष्टि जोड़ें",
+  "verify.how_it_works": "तुरंत कार्बन डेटा निकालने के लिए अपनी मिट्टी लैब रिपोर्ट की छवि या PDF अपलोड करें।",
+  "verify.input_formats": "समर्थित इनपुट प्रारूप",
+  "verify.extracted_params": "निकाले गए पैरामीटर",
+  "hub.subtitle": "आपके नजदीक जियोलोकेटेड हरित अर्थव्यवस्था आपूर्तिकर्ता",
+  "hub.fetch_error": "आपूर्तिकर्ता प्राप्त करने में असमर्थ",
+  "insights.cat.fertilizer": "उर्वरक",
+  "insights.cat.residue": "फसल अवशेष",
+  "insights.cat.soil": "मिट्टी",
+  "insights.cat.water": "जल",
+  "insights.cat.energy": "ऊर्जा",
+  "insights.cat.agroforestry": "कृषि वानिकी",
+  "insights.cost.free": "मुफ्त",
+  "insights.cost.low": "कम लागत",
+  "insights.cost.medium": "मध्यम लागत",
+  "insights.time.immediate": "तुरंत",
+  "insights.time.one_season": "1 मौसम",
+  "insights.time.one_two_years": "1-2 वर्ष"
 }

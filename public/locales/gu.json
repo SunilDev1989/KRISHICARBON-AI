@@ -1,4 +1,4 @@
-{
+﻿{
   "nav.home": "હોમ",
   "nav.dashboard": "ડેશબોર્ડ",
   "nav.ledger": "ઉત્સર્જન ખાતું",
@@ -126,5 +126,29 @@
   "insights.market.price_label": "સ્વૈચ્છિક કાર્બન ભાવ",
   "insights.market.size_label": "ન્યૂનતમ પ્રોજેક્ટ કાર્ધ",
   "insights.market.standard_label": "સત્યાપન ધોરણ",
-  "insights.market.source": "સ્ત્રોત: Gold Standard, Verra VCS, ભારત કાર્બન બાજાર"
+  "insights.market.source": "સ્ત્રોત: Gold Standard, Verra VCS, ભારત કાર્બન બાજાર",
+  "nav.insights": "ઇન્સાઇટ",
+  "ledger.subtitle": "IPCC Tier 1 પ્રમાણિત ઉત્સર્જન રેકોર્ડ",
+  "ledger.total_co2e": "કુલ CO\u2082e (કિગ્રા)",
+  "ledger.total_entries": "કુલ નોંધો",
+  "ledger.total_n2o": "કુલ N\u2082O (કિગ્રા)",
+  "ledger.residue": "પાક અવશેષ",
+  "ledger.add_entry": "નવી ઉત્સર્જન નોંધ ઉમેરો",
+  "verify.how_it_works": "કાર્બન ડેટા તાત્કાલિક કાઢવા માટે તમારી જમીન લેબ રિપોર્ટ છબી અથવા PDF અપલોડ કરો.",
+  "verify.input_formats": "સમર્થિત ઇનપુટ ફોર્મેટ",
+  "verify.extracted_params": "કાઢેલ પ્રાચલ",
+  "hub.subtitle": "તમારી નજીક જિઓલોકેટ હરિત અર્થવ્યવસ્થા સપ્લાયર",
+  "hub.fetch_error": "સપ્લાયર મળ્યા નહીં",
+  "insights.cat.fertilizer": "ખાતર",
+  "insights.cat.residue": "પાક અવશેષ",
+  "insights.cat.soil": "જમીન",
+  "insights.cat.water": "પાણી",
+  "insights.cat.energy": "ઊર્જા",
+  "insights.cat.agroforestry": "કૃષિ-વનસ્પતિ",
+  "insights.cost.free": "મફત",
+  "insights.cost.low": "ઓછી કિંમત",
+  "insights.cost.medium": "મધ્યમ કિંમત",
+  "insights.time.immediate": "તાત્કાલિક",
+  "insights.time.one_season": "1 મોસમ",
+  "insights.time.one_two_years": "1-2 વર્ષ"
 }

@@ -90,7 +90,7 @@ export default function LedgerPage() {
           <h1 className="text-3xl font-black text-gray-900 flex items-center gap-2">
             <BookOpen className="w-8 h-8 text-emerald-600" />{t('ledger.title')}
           </h1>
-          <p className="text-sm text-gray-500 mt-1">IPCC Tier 1 certified emission records from Firestore</p>
+          <p className="text-sm text-gray-500 mt-1">{t('ledger.subtitle')}</p>
         </div>
         <button
           onClick={exportCsv}
@@ -104,17 +104,17 @@ export default function LedgerPage() {
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
           <p className="text-2xl font-black text-red-700">{totalCo2e.toFixed(2)}</p>
-          <p className="text-xs text-red-500 font-medium">Total CO₂e (kg)</p>
+          <p className="text-xs text-red-500 font-medium">{t('ledger.total_co2e')}</p>
         </div>
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
           <p className="text-2xl font-black text-amber-700">{filtered.length}</p>
-          <p className="text-xs text-amber-500 font-medium">Total Entries</p>
+          <p className="text-xs text-amber-500 font-medium">{t('ledger.total_entries')}</p>
         </div>
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
           <p className="text-2xl font-black text-emerald-700">
             {filtered.reduce((s, l) => s + (l.n2o_kg ?? 0), 0).toFixed(3)}
           </p>
-          <p className="text-xs text-emerald-500 font-medium">Total N₂O (kg)</p>
+          <p className="text-xs text-emerald-500 font-medium">{t('ledger.total_n2o')}</p>
         </div>
       </div>
 
@@ -171,7 +171,7 @@ export default function LedgerPage() {
                         {log.fertilizerType ? (
                           <><Leaf className="w-3.5 h-3.5 text-emerald-500" /><span className="font-medium text-emerald-800">{log.fertilizerType}</span></>
                         ) : (
-                          <><Flame className="w-3.5 h-3.5 text-red-500" /><span className="font-medium text-red-700">Residue</span></>
+                          <><Flame className="w-3.5 h-3.5 text-red-500" /><span className="font-medium text-red-700">{t('ledger.residue')}</span></>
                         )}
                       </span>
                     </td>
@@ -191,7 +191,7 @@ export default function LedgerPage() {
 
       {/* Add New Emission Section */}
       <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-800 mb-5">Add New Emission Entry</h2>
+        <h2 className="text-lg font-bold text-gray-800 mb-5">{t('ledger.add_entry')}</h2>
         <EmissionForm />
       </div>
     </div>

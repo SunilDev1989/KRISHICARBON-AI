@@ -22,7 +22,16 @@ interface EmissionSummary {
   residueType?: string;
   totalCo2eKg?: number;
   monthlyRecords?: number;
+  lang?: string;
 }
+
+const LANG_NAMES: Record<string, string> = {
+  en: 'English',
+  hi: 'Hindi',
+  gu: 'Gujarati',
+  ta: 'Tamil',
+  mr: 'Marathi',
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,7 +43,10 @@ export async function POST(req: NextRequest) {
       residueType = 'unknown',
       totalCo2eKg = 0,
       monthlyRecords = 0,
+      lang = 'en',
     } = body;
+
+    const languageName = LANG_NAMES[lang] ?? 'English';
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -59,17 +71,19 @@ IMPORTANT RULES:
 4. Rank by CO₂e savings potential (highest first)
 5. Use simple, practical language a farmer with basic education can understand
 6. Include at least one suggestion about soil carbon sequestration
+7. LANGUAGE: Write the "title", "description", and "ipccBasis" fields in ${languageName}.
+   Keep these fields in English exactly as specified (they are enum values): "category", "costLevel", "timeToImpact".
 
 Return ONLY a valid JSON array with exactly 5 objects. Each object must have:
 {
   "rank": number (1-5),
-  "title": string (max 8 words),
-  "description": string (2-3 sentences, practical steps),
+  "title": string (max 8 words, in ${languageName}),
+  "description": string (2-3 sentences, practical steps, in ${languageName}),
   "co2eSavingKgPerSeason": number (estimated),
   "costLevel": "Free" | "Low (₹500-2000)" | "Medium (₹2000-10000)",
   "timeToImpact": "Immediate" | "1 Season" | "1-2 Years",
   "category": "Fertilizer" | "Residue" | "Soil" | "Water" | "Energy" | "Agroforestry",
-  "ipccBasis": string (1 sentence citing IPCC guideline)
+  "ipccBasis": string (1 sentence citing IPCC guideline, in ${languageName})
 }`;
 
     let lastError: Error | null = null;
