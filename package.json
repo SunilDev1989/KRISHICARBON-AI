@@ -1,19 +1,23 @@
 {
-  "name": "krishicarbon-temp",
-  "version": "0.1.0",
+  "name": "krishicarbon-ai",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "next lint",
+    "lint:strict": "eslint src --ext .ts,.tsx --max-warnings 0",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "analyze": "ANALYZE=true next build"
   },
   "vitest": {
     "environment": "node",
-    "include": ["src/lib/__tests__/**/*.test.ts"]
+    "include": [
+      "src/lib/__tests__/**/*.test.ts"
+    ]
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -29,6 +33,8 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.11.3",
+    "@next/bundle-analyzer": "^16.2.9",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -36,6 +42,7 @@
     "@vitest/coverage-v8": "^4.1.9",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.9"

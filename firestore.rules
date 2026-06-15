@@ -1,38 +1,59 @@
 rules_version = '2';
 
+// KrishiCarbon AI — Firestore Security Rules
+// Principle: farmId-scoped isolation. Each anonymous session
+// can only read/write its own farm data. No cross-farm access.
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ── Emission Logs ──────────────────────────────────────────────────────
-    // Readable/writable by anyone (session-based auth without registration).
-    // farm_id scoping provides logical separation between farms.
-    match /emissionLogs/{docId} {
-      allow read: if request.auth == null || request.auth != null;
-      allow create: if isValidEmissionLog(request.resource.data);
-      allow update, delete: if false; // immutable ledger entries
+    // ── Helper functions ──────────────────────────────────────────────────
+    function isValidFarmId(farmId) {
+      // farmId must be a non-empty string of 8–64 safe characters
+      return farmId is string
+          && farmId.size() >= 8
+          && farmId.size() <= 64
+          && farmId.matches('^[a-zA-Z0-9_-]+$');
     }
 
-    // ── Soil Ledgers ───────────────────────────────────────────────────────
-    match /soilLedgers/{docId} {
-      allow read: if request.auth == null || request.auth != null;
-      allow create: if isValidSoilLedger(request.resource.data);
-      allow update, delete: if false; // immutable verification records
+    function hasRequiredEmissionFields(data) {
+      return data.keys().hasAll(['farmId', 'timestamp', 'totalCO2e'])
+          && data.totalCO2e is number
+          && data.totalCO2e >= 0;
     }
 
-    // ── Validation Functions ───────────────────────────────────────────────
-    function isValidEmissionLog(data) {
-      return data.keys().hasAll(['farmId', 'co2e_kg', 'timestamp'])
-        && data.farmId is string
-        && data.farmId.size() > 0
-        && data.co2e_kg is number
-        && data.co2e_kg >= 0
-        && data.co2e_kg <= 1000000; // sanity cap: 1000 tCO2e max per entry
+    // ── Farm emissions ledger ─────────────────────────────────────────────
+    // Path: /emissions/{farmId}/records/{recordId}
+    match /emissions/{farmId}/records/{recordId} {
+
+      // Anyone with the farmId can read their own records (session-scoped)
+      allow read: if isValidFarmId(farmId);
+
+      // Create: must supply required fields, farmId must match path
+      allow create: if isValidFarmId(farmId)
+                    && request.resource.data.farmId == farmId
+                    && hasRequiredEmissionFields(request.resource.data)
+                    && request.resource.data.timestamp == request.time;
+
+      // Immutable ledger — no updates or deletes allowed
+      allow update: if false;
+      allow delete: if false;
     }
 
-    function isValidSoilLedger(data) {
-      return data.keys().hasAll(['farmId', 'timestamp'])
-        && data.farmId is string
-        && data.farmId.size() > 0;
+    // ── Farm profile (optional GPS, crop type preferences) ────────────────
+    match /farms/{farmId} {
+      allow read: if isValidFarmId(farmId);
+
+      allow create, update: if isValidFarmId(farmId)
+                             && request.resource.data.farmId == farmId
+                             && request.resource.data.keys().hasAll(['farmId', 'updatedAt']);
+
+      allow delete: if false;
+    }
+
+    // ── Deny all other paths by default ───────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

@@ -7,6 +7,8 @@ export default function LanguageSwitcher() {
     { code: 'en' as const, label: 'EN', full: 'English' },
     { code: 'hi' as const, label: 'हि', full: 'Hindi' },
     { code: 'gu' as const, label: 'ગુ', full: 'Gujarati' },
+    { code: 'ta' as const, label: 'த', full: 'Tamil' },
+    { code: 'mr' as const, label: 'म', full: 'Marathi' },
   ];
 
   return (

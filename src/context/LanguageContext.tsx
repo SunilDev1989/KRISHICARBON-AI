@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-export type Locale = 'en' | 'hi' | 'gu';
+export type Locale = 'en' | 'hi' | 'gu' | 'ta' | 'mr';
 
 interface LanguageContextType {
   locale: Locale;
@@ -32,7 +32,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('krishicarbon_locale') as Locale | null;
-    const initial: Locale = saved && ['en', 'hi', 'gu'].includes(saved) ? saved : 'en';
+    const initial: Locale = saved && ['en', 'hi', 'gu', 'ta', 'mr'].includes(saved) ? (saved as Locale) : 'en';
     setLocaleState(initial);
     loadTranslations(initial);
   }, [loadTranslations]);
