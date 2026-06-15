@@ -1,211 +1,239 @@
-# KrishiCarbon AI 🌾🤖
+# 🌾 KrishiCarbon AI
 
-> **Carbon Intelligence for Every Farmer** — A production-grade, real-time carbon ledger, climate risk, and AI verification engine built for agricultural ecosystems.
+> **"The most urgent carbon-related problem for farmers is the dual squeeze of agriculture heavily emitting greenhouse gases and the severe costs incurred as climate change destroys harvests, depletes groundwater, and degrades soil. Transitioning to low-carbon practices requires capital, while international supply chains require strict carbon tracking, trapping small-scale farmers in a verification trap where calculating sequestration is too complex and expensive."**
 
----
-
-## # Problem Statement Alignment
-
-> "The most urgent carbon-related problem for farmers is the dual squeeze of agriculture heavily emitting greenhouse gases (like methane and nitrous oxide) and the severe costs incurred as climate change destroys harvests, depletes groundwater, and degrades soil. Transitioning to low-carbon practices requires capital, while international supply chains require strict carbon tracking, trapping small-scale farmers in a verification trap where calculating sequestered carbon or emissions reduction is too complex and expensive."
-
-**KrishiCarbon AI** directly dismantles this verification trap by providing:
-- 🔬 **Free, automatic IPCC Tier 1 emission calculations** — no agronomist needed
-- 🤖 **Gemini 1.5 Flash multimodal AI** — reads lab reports and voice inputs instantly
-- 🛰️ **NASA POWER live telemetry** — real-time climate risk alerts at field level
-- 🌐 **Multilingual (EN/HI/GU)** — accessible to every farmer regardless of literacy level
-- 📡 **Firebase offline-first** — fully functional in low-connectivity rural regions
+KrishiCarbon AI is a production-grade, zero-mock-data carbon ledger, climate risk, and verification engine built for Indian smallholder farmers. It breaks the verification trap by making IPCC Tier 1 carbon accounting as simple as a voice note — free, offline-capable, and multilingual.
 
 ---
 
-## Architecture
+## 🏆 Hackathon Evaluation Alignment
 
-```
-Next.js 14 (App Router)
-├── Client: React Context API (LanguageContext, FarmContext)
-├── Styling: Tailwind CSS — Warm Light Theme
-├── Database: Firebase Cloud Firestore (offline persistence)
-├── Storage: Firebase Storage (soil lab reports)
-├── AI: Google Gemini 1.5 Flash (@google/generative-ai)
-├── Live APIs:
-│   ├── NASA POWER Agroclimatology API
-│   ├── Google Places API (Transition Hub)
-│   ├── OpenWeatherMap API
-│   └── HTML5 Geolocation API
-└── Charts: Chart.js + react-chartjs-2
-```
+| Criterion | Implementation |
+|-----------|---------------|
+| **Code Quality** | Shared pure libs (`lib/emissions.ts`, `lib/climateRisk.ts`), strict TypeScript, JSDoc with IPCC citations, DRY API routes, single `next.config.ts` |
+| **Security** | Server-side API key proxying, CSP + HSTS + X-Frame-Options headers, rate limiting (30 req/min), file size validation, immutable Firestore audit rules |
+| **Efficiency** | NASA POWER sessionStorage cache (1hr TTL), weather edge cache (5min), Gemini 4-model auto-fallback, Firebase offline-first IndexedDB |
+| **Testing** | 65 unit + integration tests across 4 suites — `npm test` runs in <600ms |
+| **Accessibility** | Skip-to-content, ARIA landmarks, fieldset/legend radio groups, aria-live alerts, EN/HI/GU i18n, focus:ring on all interactive elements |
+| **Problem Statement** | Directly solves the verification trap: free IPCC math, offline persistence, voice input for low-literacy farmers, real NASA climate risk |
 
 ---
 
-## Core Modules
+## 🚀 Quick Start
 
-### Module 1: IPCC Tier 1 N₂O Emission Ledger (`/dashboard/ledger`)
-- **Formula**: `N₂O_Direct = MassN × EF1(0.01) × (44/28)`
-- **CO₂e**: `N₂O_Direct × GWP(273)`  *(IPCC AR6 GWP value)*
-- Supports: Urea (46% N), DAP (18% N), NPK (15% N)
-- Crop residue burning emission with biomass density factors
-- All entries logged to Firestore `emissionLogs` collection
-- Full IPCC formula trace available per entry
-
-### Module 2: AI Soil & Voice Verification (`/dashboard/verify`)
-- **Path A**: Drag-and-drop soil lab report (JPG/PNG/PDF) → Gemini Vision extraction
-  - Returns: `{ soc, nitrogen, ph, bulkDensity }` — strict JSON
-- **Path B**: Browser MediaRecorder audio → Gemini intent extraction
-  - Supports Hindi, Gujarati, English voice inputs
-  - Returns: `{ action, type, quantity_kg, crop, raw_transcript }`
-- Files stored to Firebase Storage, URLs persisted to `soilLedgers`
-
-### Module 3: NASA POWER Climate Risk Monitor (`/dashboard`)
-- Live 7-day agroclimatology data: `T2M_MAX`, `GWETTOP`, `PRECTOTCORR`
-- **Critical Reversal Logic**: IF `T2M_MAX > 38°C AND GWETTOP < 0.25` for 3+ consecutive days → CRITICAL REVERSAL RISK banner
-- Live Chart.js dual-axis chart (temperature + topsoil wetness)
-
-### Module 4: Local Transition Hub (`/dashboard/hub`)
-- Google Places API via server-side proxy (avoids CORS, protects API key)
-- 4 search categories: Organic Fertilizers, Solar Pumps, Biochar/Compost, Organic Seeds
-- Haversine distance calculation from farm coordinates
-- Supplier cards with directions, phone, open/closed status
-
----
-
-## Directory Structure
-
-```
-/src
-├── /config
-│   └── firebase.ts          # Firebase init with offline persistence
-├── /context
-│   ├── LanguageContext.tsx  # EN/HI/GU i18n with localStorage persistence
-│   └── FarmContext.tsx      # Coords, NASA, soil metrics, reversal risk
-├── /app
-│   ├── layout.tsx           # Sticky header, Inter font, providers
-│   ├── page.tsx             # Landing page with problem statement
-│   ├── /dashboard
-│   │   ├── page.tsx         # Main analytics grid
-│   │   ├── /ledger/page.tsx # Emission history + CSV export
-│   │   ├── /verify/page.tsx # Lab upload + voice recorder
-│   │   └── /hub/page.tsx    # Google Places supplier discovery
-│   └── /api
-│       ├── /compute-emissions/route.ts
-│       ├── /extract-soil/route.ts
-│       ├── /voice-intent/route.ts
-│       └── /places/route.ts
-├── /components/ui           # 10+ accessible, warm-theme components
-└── /lib/utils.ts            # clsx + tailwind-merge
-/public
-└── /locales
-    ├── en.json              # ~80 English tokens
-    ├── hi.json              # Hindi translations
-    └── gu.json              # Gujarati translations
-```
-
----
-
-## Setup
-
-### Prerequisites
-- Node.js 18+
-- Firebase project with Firestore (Native mode) + Storage enabled
-- Google Cloud project with Places API + Geocoding API enabled
-
-### 1. Clone & Install
 ```bash
-git clone https://github.com/your-org/krishicarbon-ai
-cd krishicarbon-ai
+git clone https://github.com/SunilDev1989/KRISHICARBON-AI.git
+cd KRISHICARBON-AI
+
+# Install dependencies
 npm install
-```
 
-### 2. Configure Environment
-```bash
+# Set up environment variables
 cp .env.local.example .env.local
-```
+# Edit .env.local with your keys (see Configuration section below)
 
-Fill in `.env.local`:
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=...         # From Firebase Console
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=krishicarbon-ai-d08f5.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=krishicarbon-ai-d08f5
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=krishicarbon-ai-d08f5.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
-NEXT_PUBLIC_FIREBASE_APP_ID=...
-GEMINI_API_KEY=...                       # From Google AI Studio
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=...      # Google Maps Platform
-NEXT_PUBLIC_OPENWEATHERMAP_API_KEY=...   # OpenWeatherMap
-```
+# Run tests
+npm test
 
-### 3. Firebase Setup
-In Firebase Console:
-1. Create Firestore database in **Native mode**
-2. Enable Firebase Storage
-3. Add Firestore security rules (start with test mode for dev)
-4. Copy Web App SDK config to `.env.local`
-
-### 4. Run Development Server
-```bash
+# Start development server
 npm run dev
 ```
+
 Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Multilingual Support
+## 🔑 Configuration
 
-All UI text resolves via the `LanguageContext`:
-```tsx
-const { t } = useLanguage();
-return <h1>{t('dashboard.title')}</h1>;
+Create `.env.local` with the following keys:
+
+```env
+# Gemini AI — Google AI Studio (server-side only, never exposed to browser)
+GEMINI_API_KEY=your_gemini_api_key
+
+# Firebase — Firestore + Storage
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+# OpenWeatherMap — proxied server-side (key never reaches browser)
+OPENWEATHERMAP_API_KEY=your_owm_key
+
+# Google Maps Places — proxied server-side
+GOOGLE_MAPS_API_KEY=your_maps_key
 ```
 
-Locale files: `/public/locales/en.json`, `hi.json`, `gu.json`
+> **Security note**: Only `NEXT_PUBLIC_FIREBASE_*` keys are exposed to the browser (required by Firebase SDK). All other keys (`GEMINI_API_KEY`, `OPENWEATHERMAP_API_KEY`, `GOOGLE_MAPS_API_KEY`) are strictly server-side only, proxied through `/api/*` routes.
 
 ---
 
-## IPCC Emission Formula Reference
+## 🧪 Testing
+
+```bash
+# Run all tests (65 tests across 4 suites)
+npm test
+
+# Watch mode
+npm run test:watch
+
+# Coverage report
+npm run test:coverage
+```
+
+**Test suites:**
+
+| Suite | Tests | Coverage |
+|-------|-------|----------|
+| `emissions.test.ts` | 17 | IPCC formula correctness, linearity, error handling |
+| `climateRisk.test.ts` | 14 | Reversal risk detection, threshold boundaries, sentinels |
+| `computeEmissions.test.ts` | 14 | API validation, response shape, combined scenarios |
+| `edgeCases.test.ts` | 20 | Boundaries, Indian farm scenarios, precision, all crop/fertilizer types |
+
+All tests run in **< 600ms** with zero external dependencies (pure functions, no mocking needed).
+
+---
+
+## 🏗️ Architecture
 
 ```
-Mass N (kg)  = Fertilizer Mass × N fraction
-              (Urea: 46%, DAP: 18%, NPK: 15%)
-
-N₂O-N Direct = Mass N × EF₁ (0.01 kg N₂O-N per kg N)
-N₂O (kg)     = N₂O-N Direct × (44/28)
-CO₂e (kg)    = N₂O (kg) × GWP (273 — IPCC AR6)
+┌─────────────────────────────────────────────────────────┐
+│                    Next.js 16 App Router                │
+├───────────────────┬─────────────────────────────────────┤
+│   Client (React)  │         Server (API Routes)         │
+│                   │                                     │
+│  FarmContext ──── │──▶ /api/compute-emissions           │
+│  (sessionStorage  │      Uses lib/emissions.ts (IPCC)   │
+│   NASA cache)     │                                     │
+│                   │──▶ /api/extract-soil                │
+│  Gemini Flash AI  │      Gemini 2.5-flash inlineData    │
+│  soil extraction  │      + 4-model auto-fallback        │
+│                   │                                     │
+│  NASA POWER       │──▶ /api/weather (proxied OWM)       │
+│  7-day telemetry  │──▶ /api/places  (proxied Maps)      │
+│                   │──▶ /api/voice-intent (Gemini)       │
+│  Firebase SDK     │                                     │
+│  (offline-first   │    Security Middleware              │
+│   IndexedDB)      │    Rate limit: 30 req/min/IP        │
+└───────────────────┴─────────────────────────────────────┘
+                              │
+                    ┌─────────┴─────────┐
+                    │   Firebase Cloud   │
+                    │  Firestore + GCS   │
+                    │ (immutable ledger) │
+                    └───────────────────┘
 ```
 
-**Example**: 100 kg Urea → Mass N = 46 kg → N₂O = 0.657 kg → **CO₂e = 179.5 kg**
+---
+
+## 🌍 Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Landing page — problem statement, CTA |
+| `/dashboard` | Live NASA POWER climate data, weather widget, carbon reversal risk alert |
+| `/dashboard/ledger` | Emission calculator (IPCC Tier 1) + Firestore ledger |
+| `/dashboard/hub` | Supplier marketplace, carbon credits, verification certificates |
+| `/dashboard/verify` | Gemini AI soil lab report extraction (PDF + image) |
 
 ---
 
-## Verification Test
+## 🔬 IPCC Tier 1 Emission Formula
 
-| Input | Expected N₂O | Expected CO₂e |
-|-------|-------------|---------------|
-| 100 kg Urea | 0.6571 kg | 179.4 kg |
-| 100 kg DAP | 0.2571 kg | 70.2 kg |
-| 500 kg wheat residue (burning) | — | 760 kg |
+The core carbon accounting uses peer-reviewed IPCC 2006 Guidelines, Vol. 4:
 
----
+```
+Mass N (kg)       = Applied Fertilizer (kg) × N_fraction
+N₂O-N Direct (kg) = Mass N × EF₁ (0.01)          [IPCC Eq. 11.1]
+N₂O Direct (kg)   = N₂O-N × (44/28)
+CO₂e (kg)         = N₂O Direct × GWP_N₂O (273)   [IPCC AR6]
+```
 
-## Tech Stack
+**Residue Burning:**
+```
+CO₂e (kg) = Residue Mass (kg) × EF_crop           [IPCC Vol.4 Table 2.5]
+```
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 14 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS 3 |
-| Database | Firebase Firestore (offline-first) |
-| Storage | Firebase Storage |
-| AI | Google Gemini 1.5 Flash |
-| Live Data | NASA POWER API |
-| Weather | OpenWeatherMap API |
-| Maps | Google Places API |
-| Charts | Chart.js + react-chartjs-2 |
-| Icons | Lucide React |
+Every calculation produces a full `formulaTrace` audit string — an evaluator can verify the math line-by-line.
 
 ---
 
-## License
+## 📡 NASA POWER Integration
 
-MIT License — Built for the farmers of India 🌾
+Fetches 7 days of agroclimatology data per farm GPS coordinates:
+
+- `T2M_MAX` — Maximum 2m air temperature (°C)
+- `GWETTOP` — Topsoil wetness ratio (0–1)
+- `PRECTOTCORR` — Corrected precipitation (mm/day)
+
+**Carbon Reversal Risk Algorithm:**
+If `T2M_MAX > 38°C` AND `GWETTOP < 0.25` for **3+ consecutive days**, a red alert fires — soil organic carbon is oxidising back to CO₂, voiding carbon credits.
+
+Results are cached in `sessionStorage` with a 1-hour TTL (NASA data is daily, not real-time).
 
 ---
 
-*KrishiCarbon AI — Zero compromise on carbon intelligence.*
+## ♿ Accessibility
+
+- **WCAG 2.1 AA** compliant structural markup
+- Skip-to-content link (visible on keyboard focus)
+- All form inputs: `<label htmlFor>` + `id` + `aria-describedby`
+- Custom radio buttons: `role="radio"` + `aria-checked`
+- Error messages: `role="alert"` + `aria-live="assertive"`
+- Results: `aria-live="polite"` — announced without interrupting
+- Buttons: `aria-expanded`, `aria-busy`, `aria-label`
+- Keyboard navigation: `focus:ring-2` on all interactive elements
+- Multilingual: **English** · **हिन्दी** · **ગુજરાતી**
+
+---
+
+## 🔐 Security
+
+- **API keys**: All sensitive keys are server-only env vars
+- **Security headers**: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Permissions-Policy
+- **Rate limiting**: 30 requests/minute per IP (edge middleware)
+- **File validation**: 10 MB max upload size (HTTP 413)
+- **Input validation**: Type whitelist + numeric bounds on all API inputs
+- **Firestore rules**: Immutable audit ledger — entries cannot be deleted or modified
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| Framework | Next.js 16 (App Router) | SSR, Edge Middleware, API Routes |
+| AI | Gemini 2.5 Flash | Soil PDF extraction, voice intent parsing |
+| Database | Firebase Firestore | Offline-first IndexedDB persistence |
+| Storage | Firebase Storage | Soil report file storage |
+| Climate Data | NASA POWER API | Free, authoritative agroclimatology |
+| Weather | OpenWeatherMap | Current field-level conditions |
+| Charts | Chart.js | Carbon trend visualisation |
+| Styling | Tailwind CSS v4 | Utility-first, consistent design |
+| Testing | Vitest | Fast, zero-config unit tests |
+| i18n | Custom LanguageContext | EN / HI / GU |
+
+---
+
+## 🌱 Problem Statement Solution
+
+| Farmer Pain Point | KrishiCarbon AI Solution |
+|-------------------|--------------------------|
+| Carbon verification is too complex | IPCC Tier 1 = one form, one number, one audit trail |
+| Labs & consultants are too expensive | Gemini AI reads soil lab PDFs for free |
+| No internet in villages | Firebase offline-first — works without connectivity |
+| English-only tools | EN / हिन्दी / ગુજરાતી + voice input |
+| Can't prove carbon credits to buyers | Immutable Firestore ledger + verification certificates |
+| Climate risk destroys sequestration | NASA POWER reversal risk alerts |
+
+---
+
+## 📄 License
+
+MIT — Open source for the benefit of farmers everywhere.
+
+---
+
+*Built for the Google Cloud + Gemini Hackathon 2026 · KrishiCarbon AI*
