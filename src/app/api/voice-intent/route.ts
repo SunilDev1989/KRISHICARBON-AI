@@ -76,7 +76,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const parsed = JSON.parse(jsonMatch[0]);
     return NextResponse.json({ ...parsed, success: true });
   } catch (e) {
-    console.error('Voice intent error:', e);
     return NextResponse.json({ error: 'Voice processing failed.', detail: String(e) }, { status: 500 });
   }
 }

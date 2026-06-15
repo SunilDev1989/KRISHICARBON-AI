@@ -168,8 +168,8 @@ export function FarmProvider({ children }: { children: React.ReactNode }) {
 
       setNasaData(points);
       setCriticalReversalRisk(checkReversalRisk(points));
-    } catch (e) {
-      console.error('NASA POWER fetch failed:', e);
+    } catch {
+      // NASA POWER fetch failed — panel stays empty, no crash
     } finally {
       setNasaLoading(false);
     }
@@ -188,8 +188,8 @@ export function FarmProvider({ children }: { children: React.ReactNode }) {
         icon: data.weather[0].icon,
         city: data.name,
       });
-    } catch (e) {
-      console.error('Weather fetch failed:', e);
+    } catch {
+      // Weather fetch failed — widget stays empty, no crash
     }
   }, []);
 

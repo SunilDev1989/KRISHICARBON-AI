@@ -118,7 +118,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
   } catch (e) {
-    console.error('Emission compute error:', e);
     return NextResponse.json({ error: 'Server error during emission calculation.' }, { status: 500 });
   }
 }

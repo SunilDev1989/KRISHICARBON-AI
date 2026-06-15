@@ -26,7 +26,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       const data = await res.json();
       setTranslations(data);
     } catch {
-      console.error(`Failed to load translations for locale: ${loc}`);
+      // Translation load failed — UI stays in previous locale or English fallback
     }
   }, []);
 

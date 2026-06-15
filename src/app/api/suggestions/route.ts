@@ -132,7 +132,6 @@ Return ONLY a valid JSON array with exactly 5 objects. Each object must have:
     });
 
   } catch (e) {
-    console.error('Suggestions API error:', e);
     return NextResponse.json(
       { error: 'Failed to generate suggestions.' },
       { status: 500 }

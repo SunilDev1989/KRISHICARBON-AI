@@ -77,8 +77,7 @@ export async function POST(req: NextRequest) {
         const is429 = lastError.includes('429') || lastError.includes('quota') || lastError.includes('Too Many Requests');
         const is404 = lastError.includes('404') || lastError.includes('not found');
         if (is429 || is404) {
-          console.warn(`Model ${modelName} unavailable (${is429 ? '429 quota' : '404'}), trying next...`);
-          continue; // try next model
+          continue; // try next model — quota or model not found
         }
         throw modelErr; // non-quota error — rethrow immediately
       }
@@ -127,16 +126,14 @@ export async function POST(req: NextRequest) {
         extractedMetrics: parsed,
         timestamp: serverTimestamp(),
       });
-    } catch (storageErr) {
+    } catch {
       // Non-fatal — extraction succeeded; only storage/Firestore failed
-      console.error('Storage/Firestore error (non-fatal):', storageErr);
     }
 
     return NextResponse.json({ ...parsed, storageUrl, success: true });
 
   } catch (e: unknown) {
     const errMsg = e instanceof Error ? e.message : String(e);
-    console.error('Soil extraction error:', errMsg);
     return NextResponse.json({
       error: 'Gemini extraction failed.',
       detail: errMsg,

@@ -19,6 +19,18 @@ interface Supplier {
   category: string;
 }
 
+/** Minimal shape of a Google Places Text Search result used by this app */
+interface GooglePlaceResult {
+  name: string;
+  formatted_address: string;
+  rating?: number;
+  place_id?: string;
+  geometry?: {
+    location?: { lat: number; lng: number };
+  };
+  opening_hours?: { open_now?: boolean };
+}
+
 const SEARCH_CATEGORIES = [
   { id: 'organic', query: 'organic fertilizer distributor', label: 'Organic Fertilizer', emoji: '🌱' },
   { id: 'solar', query: 'solar water pump dealer', label: 'Solar Water Pumps', emoji: '☀️' },
@@ -68,7 +80,7 @@ export default function HubPage() {
       const data = await res.json();
 
       if (data.results && Array.isArray(data.results)) {
-        const mapped: Supplier[] = data.results.slice(0, 9).map((place: any) => ({
+        const mapped: Supplier[] = data.results.slice(0, 9).map((place: GooglePlaceResult) => ({
           name: place.name,
           address: place.formatted_address,
           rating: place.rating,

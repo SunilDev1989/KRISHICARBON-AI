@@ -18,12 +18,15 @@ interface EmissionLog {
   cropType: string | null;
 }
 
+/** Union of valid emission log filter values */
+type FilterValue = 'all' | 'Urea' | 'DAP' | 'NPK' | 'Burning';
+
 export default function LedgerPage() {
   const { t } = useLanguage();
   const { farmId } = useFarm();
   const [logs, setLogs] = useState<EmissionLog[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'Urea' | 'DAP' | 'NPK' | 'Burning'>('all');
+  const [filter, setFilter] = useState<FilterValue>('all');
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -40,8 +43,8 @@ export default function LedgerPage() {
           ...doc.data(),
         })) as EmissionLog[];
         setLogs(items);
-      } catch (e) {
-        console.error('Firestore fetch error:', e);
+      } catch {
+        // Firestore fetch failed — ledger stays empty, no crash
       } finally {
         setLoading(false);
       }
@@ -125,7 +128,7 @@ export default function LedgerPage() {
         {filterOptions.map((opt) => (
           <button
             key={opt.value}
-            onClick={() => setFilter(opt.value as any)}
+            onClick={() => setFilter(opt.value as FilterValue)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               filter === opt.value
                 ? 'bg-emerald-600 text-white'
